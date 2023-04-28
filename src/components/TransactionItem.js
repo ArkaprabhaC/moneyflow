@@ -1,14 +1,14 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { formatCurrency } from "react-native-format-currency";
-import { PencilSquareIcon, TrashIcon } from 'react-native-heroicons/solid';
+import { ArrowDownLeftIcon, ArrowUpRightIcon, PencilSquareIcon, TrashIcon } from 'react-native-heroicons/solid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDataStoreKey } from '../utils/utils';
 import { useDispatch } from 'react-redux';
 import { modifyTransactions } from '../reducers/transactionsSlice';
 import { useNavigation } from '@react-navigation/native';
 
-const TransactionItem = ({ id, description, date, amount }) => {
+const TransactionItem = ({ id, description, date, amount, transactionType }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -42,17 +42,24 @@ const TransactionItem = ({ id, description, date, amount }) => {
             <Text style={styles.date}>{date}</Text>
           </View>
         </View>
-        <View>
+        <View style={{"flexDirection":"row", "alignItems": "center"}}>
+    
           <Text style={styles.amount}>{symbol} {amountMaskedWithoutSymbol}</Text>
+          { transactionType === "income" ? (
+            <ArrowUpRightIcon color={"green"} size={20} style={{"marginHorizontal": 10}}/>
+          ): (
+            <ArrowDownLeftIcon color={"red"} size={20} style={{"marginHorizontal": 10}}/>
+          )}
+          
         </View>
       </View>
       {toggleOpen ? (
         <View style={{ "flexDirection": "row", "justifyContent": "space-evenly", "textAlign": "center", "marginTop": 25 }}>
           <TouchableOpacity onPress={() => navigation.navigate("EditTransactionScreen", {
-            "editId": id,
-            "editDescription": description,
-            "editAmount": amount
-          }
+                "editId": id,
+                "editDescription": description,
+                "editAmount": amount
+              }
           )}>
             <PencilSquareIcon size={25} color="gray" />
           </TouchableOpacity>

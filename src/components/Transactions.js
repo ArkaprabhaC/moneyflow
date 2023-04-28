@@ -22,6 +22,7 @@ const Transactions = () => {
               description={item.description}
               date={item.date}
               amount={item.amount}
+              transactionType={item.transactionType}
             />
           )) : (
             <View style={{alignItems: 'center'}}>
