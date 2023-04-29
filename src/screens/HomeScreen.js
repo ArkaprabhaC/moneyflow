@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect, useLayoutEffect } from 'react'
+import { View, Text, StyleSheet5, StyleSheet } from 'react-native'
+import React, { useLayoutEffect } from 'react'
 import Transactions from '../components/Transactions';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AddTransactionButton from '../components/AddTransactionButton';
@@ -12,7 +12,7 @@ const HomeScreen = () => {
     const navigation = useNavigation();
     const totalAmount = useSelector(selectTotalAmount);
     const [_, valueWithoutSymbol, symbol] =
-      formatCurrency({ amount: totalAmount, code: "INR" });
+      formatCurrency({ amount: parseFloat(totalAmount.toFixed(2)), code: "INR" });
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     currency_symbol: {
         fontSize: 25,
-        margin: 5
+        margin: 10
     },
     spend_display_amount: {
         fontSize: 35

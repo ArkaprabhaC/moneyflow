@@ -20,7 +20,16 @@ export const transactionsSlice = createSlice({
             state.items = []
         },
         modifyTransactions: (state, action) => {
-            state.items = action.payload;
+            const payload = action.payload;
+            state.items = payload;
+            state.totalAmount = 0;
+            payload.map(item => {
+                if (item.transactionType === "expense") {
+                    state.totalAmount -= item.amount;
+                } else {
+                    state.totalAmount += item.amount;
+                }
+            })
         }
     }
 });
