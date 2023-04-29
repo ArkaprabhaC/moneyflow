@@ -13,7 +13,7 @@ const EditTransactionScreen = ({ route }) => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const { editAmount, editDescription, editId } = route.params
-    const [amount, setAmount] = useState(editAmount);
+    const [amount, setAmount] = useState(Math.abs(editAmount));
     const [textBoxDesc, setTextBoxDesc] = useState(editDescription);
     const [selectedTransactionType, setSelectedTransactionType] = useState("expense");
 
@@ -26,10 +26,13 @@ const EditTransactionScreen = ({ route }) => {
     }
 
     const createEditedTransactionItem = () => {
-        const strippedAmount = amountMaskedWithoutSymbol.replace(/,/g, '')
+        let amountString = amountMaskedWithoutSymbol.replace(/,/g, '')
+        if(selectedTransactionType === "expense") {
+            amountString = "-" + amountString;
+        }
         return {
             "id": editId,
-            "amount": parseFloat(strippedAmount),
+            "amount": parseFloat(amountString),
             "description": textBoxDesc,
             "transactionType": selectedTransactionType,
             "date": createTransactionSaveDate(),

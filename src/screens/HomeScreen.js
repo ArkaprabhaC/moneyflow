@@ -12,7 +12,7 @@ const HomeScreen = () => {
     const navigation = useNavigation();
     const totalAmount = useSelector(selectTotalAmount);
     const [_, valueWithoutSymbol, symbol] =
-      formatCurrency({ amount: parseFloat(totalAmount.toFixed(2)), code: "INR" });
+      formatCurrency({ amount: totalAmount.toFixed(2), code: "INR" });
 
     useLayoutEffect(() => {
         navigation.setOptions({

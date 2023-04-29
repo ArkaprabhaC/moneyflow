@@ -9,27 +9,18 @@ export const transactionsSlice = createSlice({
     reducers: {
         addTransaction: (state, action) => {
             const payload = action.payload;
-            if (payload.transactionType === "expense") {
-                state.totalAmount -= payload.amount;
-            } else {
-                state.totalAmount += payload.amount;
-            }
+            state.totalAmount += payload.amount;
             state.items.push(payload);
         },
         clearTransactions: (state) => {
-            state.items = []
+            state.items = [];
+            state.totalAmount = 0;
         },
         modifyTransactions: (state, action) => {
             const payload = action.payload;
             state.items = payload;
             state.totalAmount = 0;
-            payload.map(item => {
-                if (item.transactionType === "expense") {
-                    state.totalAmount -= item.amount;
-                } else {
-                    state.totalAmount += item.amount;
-                }
-            })
+            payload.map(item => state.totalAmount += item.amount);
         }
     }
 });

@@ -28,10 +28,13 @@ const AddTransactionScreen = ({route}) => {
   }
 
   const createTransactionItem = () => {
-    const strippedAmount = amountMaskedWithoutSymbol.replace(/,/g, '')
+    let amountString = amountMaskedWithoutSymbol.replace(/,/g, '')
+    if(selectedTransactionType === "expense") {
+      amountString = "-" + amountString;
+    }
     return {
       "id": nanoid(),
-      "amount": parseFloat(strippedAmount),
+      "amount": parseFloat(amountString),
       "description": textBoxDesc,
       "transactionType": selectedTransactionType,
       "date": createTransactionSaveDate(),
