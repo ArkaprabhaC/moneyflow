@@ -25,7 +25,7 @@ const HomeScreen = () => {
     return (
         <SafeAreaView style={{ flex: 1, }}>
             <View style={styles.spend_display}>
-                <Text style={styles.months_spend_text}>This month's spend</Text>
+                <Text style={styles.months_spend_text}>This month's cash in pocket</Text>
                 <View style={styles.spend_display_container}>
                     <Text style={styles.currency_symbol}>{symbol}</Text>
                     <Text style={styles.spend_display_amount}>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         marginRight: 30
     },
     months_spend_text: {
-        fontSize: 20
+        fontSize: 18
     },
     currency_symbol: {
         fontSize: 25,
