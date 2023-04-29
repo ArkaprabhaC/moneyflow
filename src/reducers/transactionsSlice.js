@@ -3,22 +3,22 @@ import { createSlice } from "@reduxjs/toolkit";
 export const transactionsSlice = createSlice({
     name:'transactions',
     initialState: {
-        value: []
+        items: []
     },
     reducers: {
         addTransaction: (state, action) => {
-            state.value.push(action.payload);
+            state.items.push(action.payload);
         },
         clearTransactions: (state) => {
-            state.value = []
+            state.items = []
         },
         modifyTransactions: (state, action) => {
-            state.value = action.payload;
+            state.items = action.payload;
         }
     }
 });
 
-export const selectAllTransactions = state => state.transactions.value;
+export const selectAllTransactions = state => state.transactions.items;
 
 export const { addTransaction, clearTransactions, modifyTransactions } = transactionsSlice.actions
 export default transactionsSlice.reducer;
