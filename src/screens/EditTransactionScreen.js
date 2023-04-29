@@ -45,8 +45,7 @@ const EditTransactionScreen = ({ route }) => {
             let transactionItemIndex = -1
             transactionItemIndex = transactions.findIndex((transaction) => transaction.id === editId );
             if ( transactionItemIndex !== -1 ) {
-                transactions.splice(transactionItemIndex, 1);
-                transactions.push(editedItem);
+                transactions.splice(transactionItemIndex, 1, editedItem);
                 dispatch(modifyTransactions(transactions));
                 await AsyncStorage.setItem(current_month_year, JSON.stringify(transactions));
             }

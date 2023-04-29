@@ -118,21 +118,11 @@ const styles = StyleSheet.create({
     width: 300,
     backgroundColor: "#fff"
   },
-  amount_textbox_container: {
-    flexDirection: "row",
-    alignItems: 'center',
-    marginRight: 30
-  },
   container: {
     marginVertical: 75,
     flexDirection: 'column',
     alignItems: 'center',
     flex: 1
-  },
-  amount_textbox: {
-    fontSize: 45,
-    borderRadius: 5,
-    alignItems: 'stretch'
   },
   description_textbox: {
     padding: 15,

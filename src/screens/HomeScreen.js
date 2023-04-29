@@ -5,11 +5,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AddTransactionButton from '../components/AddTransactionButton';
 import { useNavigation } from '@react-navigation/native';
 import { formatCurrency } from "react-native-format-currency";
+import { useSelector } from 'react-redux';
+import { selectTotalAmount } from '../reducers/transactionsSlice';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
+    const totalAmount = useSelector(selectTotalAmount);
     const [_, valueWithoutSymbol, symbol] =
-      formatCurrency({ amount: 1234.56, code: "INR" });
+      formatCurrency({ amount: totalAmount, code: "INR" });
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -48,14 +51,15 @@ const styles = StyleSheet.create({
     spend_display_container: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 10,
+        marginRight: 30
     },
     months_spend_text: {
         fontSize: 20
     },
     currency_symbol: {
         fontSize: 25,
-        margin: 10
+        margin: 5
     },
     spend_display_amount: {
         fontSize: 35
