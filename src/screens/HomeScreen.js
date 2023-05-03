@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet5, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import Transactions from '../components/Transactions';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,7 +21,6 @@ const HomeScreen = () => {
     }, []);
 
     
-
     return (
         <SafeAreaView style={{ flex: 1, }}>
             <View style={styles.spend_display}>

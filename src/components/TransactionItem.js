@@ -2,10 +2,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { formatCurrency } from "react-native-format-currency";
 import { ArrowDownLeftIcon, ArrowUpRightIcon, PencilSquareIcon, TrashIcon } from 'react-native-heroicons/solid';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getDataStoreKey } from '../utils/utils';
 import { useDispatch } from 'react-redux';
-import { modifyTransactions } from '../reducers/transactionsSlice';
+import { deleteTransactionById } from '../reducers/transactionsSlice';
 import { useNavigation } from '@react-navigation/native';
 
 const TransactionItem = ({ id, description, date, amount, transactionType }) => {
@@ -19,17 +17,9 @@ const TransactionItem = ({ id, description, date, amount, transactionType }) => 
 
   const deleteItem = async () => {
     try {
-      const current_month_year = getDataStoreKey();
-      const transactions = JSON.parse(await AsyncStorage.getItem(current_month_year));
-      let transactionItemIndex = -1
-      transactionItemIndex = transactions.findIndex((transaction) => transaction.id === id);
-      if (transactionItemIndex !== -1) {
-        transactions.splice(transactionItemIndex, 1);
-        dispatch(modifyTransactions(transactions));
-        await AsyncStorage.setItem(current_month_year, JSON.stringify(transactions));
-      }
+        dispatch(deleteTransactionById(id));
     } catch (err) {
-      console.err(err);
+      console.error(err);
     }
   }
 

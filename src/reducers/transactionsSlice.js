@@ -16,11 +16,19 @@ export const transactionsSlice = createSlice({
             state.items = [];
             state.totalAmount = 0;
         },
-        modifyTransactions: (state, action) => {
-            const payload = action.payload;
-            state.items = payload;
+        modifyTransactionById: (state, action) => {
+            const {itemId, editedItem} = action.payload;
+            const itemIndex = state.items.findIndex((transaction) => transaction.id === itemId );
+            state.items.splice(itemIndex, 1, editedItem);
             state.totalAmount = 0;
-            payload.map(item => state.totalAmount += item.amount);
+            state.items.forEach(item => state.totalAmount += item.amount);
+        },
+        deleteTransactionById: (state, action) => {
+            const itemId = action.payload;
+            const itemIndex = state.items.findIndex((transaction) => transaction.id === itemId );
+            state.items.splice(itemIndex, 1);
+            state.totalAmount = 0;
+            state.items.forEach(item => state.totalAmount += item.amount);
         }
     }
 });
@@ -28,5 +36,5 @@ export const transactionsSlice = createSlice({
 export const selectAllTransactions = state => state.transactions.items;
 export const selectTotalAmount = state => state.transactions.totalAmount;
 
-export const { addTransaction, clearTransactions, modifyTransactions } = transactionsSlice.actions
+export const { addTransaction, clearTransactions, modifyTransactionById, deleteTransactionById } = transactionsSlice.actions
 export default transactionsSlice.reducer;

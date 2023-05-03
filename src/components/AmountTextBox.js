@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TextInput } from 'react-native'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useState } from 'react'
 
 const AmountTextBox = () => {
 

@@ -2,14 +2,13 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-nativ
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import 'react-native-get-random-values'
 import { nanoid } from 'nanoid'
 import { Picker } from '@react-native-picker/picker';
 import { formatCurrency } from "react-native-format-currency";
 import { useDispatch } from 'react-redux';
 import { addTransaction } from '../reducers/transactionsSlice';
-import { getDataStoreKey, createTransactionSaveDate } from '../utils/utils'
+import { createTransactionSaveDate } from '../utils/utils'
 
 const AddTransactionScreen = ({route}) => {
   const navigation = useNavigation();
@@ -45,19 +44,10 @@ const AddTransactionScreen = ({route}) => {
     const transactionItem = createTransactionItem();
 
     try {
-      const current_month_year = getDataStoreKey();
-      let transactions = JSON.parse(await AsyncStorage.getItem(current_month_year));
-      if (transactions == null) {
-        transactions = [];
-      }
-
-      transactions.push(transactionItem);
-      await AsyncStorage.setItem(current_month_year, JSON.stringify(transactions));
       dispatch(addTransaction(transactionItem));
       navigation.goBack();
-      
     } catch (err) {
-      console.err(err);
+      console.error(err);
     }
   }
 

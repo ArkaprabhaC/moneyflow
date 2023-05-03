@@ -1,17 +1,17 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { createTransactionSaveDate, getDataStoreKey } from '../utils/utils';
-import { modifyTransactions } from '../reducers/transactionsSlice';
+import { createTransactionSaveDate } from '../utils/utils';
+import { modifyTransactionById } from '../reducers/transactionsSlice';
 import { useDispatch } from 'react-redux';
 import { formatCurrency } from 'react-native-format-currency';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Picker } from '@react-native-picker/picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 const EditTransactionScreen = ({ route }) => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
+
     const { editAmount, editDescription, editId } = route.params
     const [amount, setAmount] = useState(Math.abs(editAmount));
     const [textBoxDesc, setTextBoxDesc] = useState(editDescription);
@@ -20,7 +20,6 @@ const EditTransactionScreen = ({ route }) => {
     const [_, amountMaskedWithoutSymbol, symbol] =
         formatCurrency({ amount: amount, code: "INR" });
 
-    
     const handleAmountOnChange = (value) => {
         setAmount(value.replace(/[a-zA-Z,-\s]/g, '').replace(/\b0+/g, ''))
     }
@@ -41,21 +40,11 @@ const EditTransactionScreen = ({ route }) => {
 
     const handleEditTransaction = async (e) => {
         const editedItem = createEditedTransactionItem();
-
         try {
-            const current_month_year = getDataStoreKey();
-            const transactions = JSON.parse(await AsyncStorage.getItem(current_month_year));
-            let transactionItemIndex = -1
-            transactionItemIndex = transactions.findIndex((transaction) => transaction.id === editId );
-            if ( transactionItemIndex !== -1 ) {
-                transactions.splice(transactionItemIndex, 1, editedItem);
-                dispatch(modifyTransactions(transactions));
-                await AsyncStorage.setItem(current_month_year, JSON.stringify(transactions));
-            }
+            dispatch(modifyTransactionById({itemId: editId, editedItem: editedItem}));
             navigation.goBack();
-
         } catch (err) {
-            console.err(err);
+            console.error(err);
         }
     }
 
