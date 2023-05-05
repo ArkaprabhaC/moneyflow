@@ -16,8 +16,6 @@ const AddTransactionScreen = ({route}) => {
   const dispatch = useDispatch();
   const [textBoxDesc, setTextBoxDesc] = useState('');
   const [selectedTransactionType, setSelectedTransactionType] = useState("expense");
-
-  
  
   const [_, amountMaskedWithoutSymbol, symbol] =
     formatCurrency({ amount: amount, code: "INR" });
@@ -28,7 +26,7 @@ const AddTransactionScreen = ({route}) => {
 
   const createTransactionItem = () => {
     let amountString = amountMaskedWithoutSymbol.replace(/,/g, '')
-    if(selectedTransactionType === "expense") {
+    if( selectedTransactionType === "expense" ) {
       amountString = "-" + amountString;
     }
     return {
@@ -49,6 +47,10 @@ const AddTransactionScreen = ({route}) => {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  const checkMandatoryFieldsEmpty = () => {
+    return amount === '' || textBoxDesc === '';
   }
 
 
@@ -87,7 +89,10 @@ const AddTransactionScreen = ({route}) => {
 
       </View>
       <View style={styles.save_btn_container}>
-        <TouchableOpacity style={styles.save_btn} onPress={handleSaveTransaction}>
+        <TouchableOpacity
+          style={checkMandatoryFieldsEmpty() ? styles.save_btn_disabled : styles.save_btn}
+          onPress={handleSaveTransaction} 
+          disabled={checkMandatoryFieldsEmpty()}>
           <Text style={styles.save_btn_text}>Save</Text>
         </TouchableOpacity>
       </View>
@@ -128,7 +133,7 @@ const styles = StyleSheet.create({
   save_btn_container: {
     position: 'absolute',
     bottom: 30,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   save_btn: {
     backgroundColor: '#fff',
@@ -136,6 +141,13 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 8,
     borderRadius: 10
+  },
+  save_btn_disabled: {
+    backgroundColor: '#F0F0F0',
+    width: 300,
+    padding: 10,
+    elevation: 8,
+    borderRadius: 10,
   },
   save_btn_text: {
     fontSize: 20,

@@ -48,6 +48,10 @@ const EditTransactionScreen = ({ route }) => {
         }
     }
 
+    const checkMandatoryFieldsEmpty = () => {
+        return amount === '' || textBoxDesc === '';
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
@@ -84,7 +88,10 @@ const EditTransactionScreen = ({ route }) => {
 
             </View>
             <View style={styles.save_btn_container}>
-                <TouchableOpacity style={styles.save_btn} onPress={handleEditTransaction}>
+                <TouchableOpacity
+                    onPress={handleEditTransaction}
+                    style={checkMandatoryFieldsEmpty() ? styles.save_btn_disabled : styles.save_btn}
+                    disabled={checkMandatoryFieldsEmpty()}>
                     <Text style={styles.save_btn_text}>Save</Text>
                 </TouchableOpacity>
             </View>
@@ -108,21 +115,11 @@ const styles = StyleSheet.create({
         width: 300,
         backgroundColor: "#fff"
     },
-    amount_textbox_container: {
-        flexDirection: "row",
-        alignItems: 'center',
-        marginRight: 30
-    },
     container: {
         marginVertical: 75,
         flexDirection: 'column',
         alignItems: 'center',
         flex: 1
-    },
-    amount_textbox: {
-        fontSize: 45,
-        borderRadius: 5,
-        alignItems: 'stretch'
     },
     description_textbox: {
         padding: 15,
@@ -143,6 +140,13 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 8,
         borderRadius: 10
+    },
+    save_btn_disabled: {
+        backgroundColor: '#F0F0F0',
+        width: 300,
+        padding: 10,
+        elevation: 8,
+        borderRadius: 10,
     },
     save_btn_text: {
         fontSize: 20,
