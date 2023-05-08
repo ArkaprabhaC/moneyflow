@@ -17,7 +17,7 @@ const Transactions = () => {
         { transactions.length != 0 ?
           transactions.map(item => (
             <TransactionItem
-              key={item.id}
+              key={Math.random()}
               id={item.id}
               description={item.description}
               date={item.date}
