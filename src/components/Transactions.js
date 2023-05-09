@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Dimensions } from 'react-native';
 import React from 'react';
-import TransactionItem from './TransactionItem';
+import TransactionItemCard from './TransactionItemCard';
 import { useSelector } from 'react-redux';
 import { selectAllTransactions } from '../reducers/transactionsSlice';
 
@@ -23,7 +23,7 @@ const Transactions = () => {
       <View>
         {transactions.length != 0 ?
           transactions.map(item => (
-            <TransactionItem
+            <TransactionItemCard
               key={Math.random()}
               id={item.id}
               description={item.description}

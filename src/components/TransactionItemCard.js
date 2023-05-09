@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { deleteTransactionById } from '../reducers/transactionsSlice';
 import { useNavigation } from '@react-navigation/native';
 
-const TransactionItem = ({ id, description, date, amount, transactionType }) => {
+const TransactionItemCard = ({ id, description, date, amount, transactionType }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default TransactionItem
+export default TransactionItemCard;
