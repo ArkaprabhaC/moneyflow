@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import {  StyleSheet, ScrollView } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import Transactions from '../components/Transactions';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,31 +7,54 @@ import { useNavigation } from '@react-navigation/native';
 import { formatCurrency } from "react-native-format-currency";
 import { useSelector } from 'react-redux';
 import { selectTotalAmount } from '../reducers/transactionsSlice';
+import HomeScreenAmountCard from '../components/HomeScreenAmountCard';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     const totalAmount = useSelector(selectTotalAmount);
     const [_, valueWithoutSymbol, symbol] =
       formatCurrency({ amount: totalAmount.toFixed(2), code: "INR" });
-
+    
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: false
         });
     }, []);
 
-    
+
+    const data = [
+        {
+            "display_text": "This month's cash in pocket",
+            "amount": valueWithoutSymbol,
+            "symbol": symbol
+        },
+        {
+            "display_text": "This month's expenses",
+            "amount": valueWithoutSymbol,
+            "symbol": symbol
+        },
+        {
+            "display_text": "This month's income",
+            "amount": valueWithoutSymbol,
+            "symbol": symbol
+        }
+    ]
+
     return (
-        <SafeAreaView style={{ flex: 1, }}>
-            <View style={styles.spend_display}>
-                <Text style={styles.months_spend_text}>This month's cash in pocket</Text>
-                <View style={styles.spend_display_container}>
-                    <Text style={styles.currency_symbol}>{symbol}</Text>
-                    <Text style={styles.spend_display_amount}>
-                     { valueWithoutSymbol }
-                    </Text>
-                </View>
-            </View>
+        <SafeAreaView>
+            <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                    paddingHorizontal: 10,
+                    height: 200,
+                    marginTop: 30,
+                }}
+            >
+                <HomeScreenAmountCard {...data[0]}/>
+                <HomeScreenAmountCard {...data[1]}/>
+                <HomeScreenAmountCard {...data[2]}/>    
+            </ScrollView>
 
             <Transactions />
             <AddTransactionButton />
@@ -40,30 +63,6 @@ const HomeScreen = () => {
         
     )
 }
-
-const styles = StyleSheet.create({
-    spend_display: {
-        padding: 80,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    spend_display_container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 10,
-        marginRight: 30
-    },
-    months_spend_text: {
-        fontSize: 18
-    },
-    currency_symbol: {
-        fontSize: 25,
-        margin: 10
-    },
-    spend_display_amount: {
-        fontSize: 35
-    }
-});
 
 
 export default HomeScreen;
