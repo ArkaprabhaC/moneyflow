@@ -6,15 +6,23 @@ import AddTransactionButton from '../components/AddTransactionButton';
 import { useNavigation } from '@react-navigation/native';
 import { formatCurrency } from "react-native-format-currency";
 import { useSelector } from 'react-redux';
-import { selectTotalAmount } from '../reducers/transactionsSlice';
+import { selectCashInHandAmount, selectExpenseAmount, selectIncomeAmount } from '../reducers/transactionsSlice';
 import HomeScreenAmountCard from '../components/HomeScreenAmountCard';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
-    const totalAmount = useSelector(selectTotalAmount);
-    const [_, valueWithoutSymbol, symbol] =
-      formatCurrency({ amount: totalAmount.toFixed(2), code: "INR" });
-    
+    const cashInHand = useSelector(selectCashInHandAmount);
+    const [_, cashInHandFormatted, symbol] =
+      formatCurrency({ amount: cashInHand.toFixed(2), code: "INR" });
+
+    const totalIncome = useSelector(selectIncomeAmount);
+    const [_1, totalIncomeFormatted, symbol1] =
+    formatCurrency({ amount: totalIncome.toFixed(2), code: "INR" });
+
+    const totalExpense = useSelector(selectExpenseAmount);
+    const [_2, totalExpenseFormatted, symbol2] =
+      formatCurrency({ amount: totalExpense.toFixed(2), code: "INR" });
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: false
@@ -25,17 +33,17 @@ const HomeScreen = () => {
     const data = [
         {
             "display_text": "This month's cash in pocket",
-            "amount": valueWithoutSymbol,
+            "amount": cashInHandFormatted,
             "symbol": symbol
         },
         {
             "display_text": "This month's expenses",
-            "amount": valueWithoutSymbol,
+            "amount": totalExpenseFormatted,
             "symbol": symbol
         },
         {
             "display_text": "This month's income",
-            "amount": valueWithoutSymbol,
+            "amount": totalIncomeFormatted,
             "symbol": symbol
         }
     ]
