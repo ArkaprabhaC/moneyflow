@@ -19,7 +19,7 @@ const HomeScreenAmountCard = ({display_text, amount, symbol}) => {
 
 const styles = StyleSheet.create({
     spend_display: {
-        width: windowWidth - 50,
+        width: windowWidth - 70,
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 10,
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     spend_display_container: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10,
         marginRight: 30
     },
     months_spend_text: {

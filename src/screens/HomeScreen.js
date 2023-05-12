@@ -2,7 +2,7 @@ import { ScrollView } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import Transactions from '../components/Transactions';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AddTransactionButton from '../components/AddTransactionButton';
+import ActionButtonsBar from '../components/ActionButtonsBar';
 import { useNavigation } from '@react-navigation/native';
 import { formatCurrency } from "react-native-format-currency";
 import { useSelector } from 'react-redux';
@@ -66,7 +66,7 @@ const HomeScreen = () => {
             </ScrollView>
 
             <Transactions />
-            <AddTransactionButton />
+            <ActionButtonsBar />
        
         </SafeAreaView>
         

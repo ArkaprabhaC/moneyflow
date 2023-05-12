@@ -13,13 +13,13 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   
-  // TODO: Delete the following useEffect before shipping off to production!!
-  useEffect( () => {
-    const clearDb = async () => {
-      await persistor.purge();
-    };
-    clearDb();
-  }, []);
+  // // TODO: Delete the following useEffect before shipping off to production!!
+  // useEffect( () => {
+  //   const clearDb = async () => {
+  //     await persistor.purge();
+  //   };
+  //   clearDb();
+  // }, []);
 
   return (
     <>

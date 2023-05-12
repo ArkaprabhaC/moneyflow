@@ -6,7 +6,6 @@ import { selectAllTransactions } from '../reducers/transactionsSlice';
 
 
 const Transactions = () => {
-
   const transactions = useSelector(selectAllTransactions);
   const windowHeight = Dimensions.get('window').height;
 
@@ -42,4 +41,4 @@ const Transactions = () => {
   )
 }
 
-export default Transactions
+export default Transactions;
